@@ -1,20 +1,18 @@
-```java
+package tpjava;
+
 class Categorie {
 
     private static int compteur = 0;
-
-    private int id;
+    private final int id;
     private String libelle;
     private String code;
 
-    // Constructeur
     public Categorie(String libelle, String code) {
         this.id = ++compteur;
         this.libelle = libelle;
         this.code = code;
     }
 
-    // Getters
     public int getId() {
         return id;
     }
@@ -23,153 +21,101 @@ class Categorie {
         return libelle;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    // Setters
     public void setLibelle(String libelle) {
         this.libelle = libelle;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
 
-    // toString
     @Override
     public String toString() {
-        return "Categorie{id=" + id
-                + ", libelle='" + libelle
-                + "', code='" + code + "'}";
+        return "Categorie{id=" + id + ", libelle='" + libelle + "', code='" + code + "'}";
     }
 }
 
-
-// ============================
-// Classe Article
-// ============================
 class Article {
 
     private static int compteur = 0;
-
-    private int id;
-    private int code;
+    private final int id;
+    private String code;
     private String designation;
     private Categorie categorie;
 
-    // Constructeur
-    public Article(int code, String designation, Categorie categorie) {
+    public Article(String code, String designation, Categorie categorie) {
         this.id = ++compteur;
         this.code = code;
         this.designation = designation;
         this.categorie = categorie;
     }
 
-    // Getters
     public int getId() {
         return id;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getDesignation() {
         return designation;
     }
 
-    public Categorie getCategorie() {
-        return categorie;
-    }
-
-    // Setters
-    public void setCode(int code) {
-        this.code = code;
-    }
-
     public void setDesignation(String designation) {
         this.designation = designation;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
     }
 
     public void setCategorie(Categorie categorie) {
         this.categorie = categorie;
     }
 
-    // toString
     @Override
     public String toString() {
-        return id + " " + code + " " + designation;
+        return "Article{id=" + id + ", code='" + code + "', designation='" + designation + "'}";
     }
 }
 
-
-// ============================
-// Classe principale
-// ============================
-public class TestApp {
+public class Main {
 
     public static void main(String[] args) {
 
-        // Création des catégories
-        Categorie c1 = new Categorie(
-                "Ordinateur Portable",
-                "O PR"
-        );
+        Categorie c1 = new Categorie("Informatique", "INFO");
+        Categorie c2 = new Categorie("Bureautique", "BUR");
 
-        Categorie c2 = new Categorie(
-                "Ordinateur Poste",
-                "O PO"
-        );
+        Categorie[] categories = {c1, c2};
 
-        // Tableau des catégories
-        Categorie[] categories = {
-            c1, c2
-        };
+        Article a1 = new Article("A01", "Ordinateur", c1);
+        Article a2 = new Article("A02", "Clavier", c1);
+        Article a3 = new Article("A03", "Imprimante", c2);
+        Article a4 = new Article("A04", "Souris", c1);
 
+        Article[] articles = {a1, a2, a3, a4};
 
-        // Création des articles
-        Article a1 = new Article(
-                14,
-                "DELL INSPIRON",
-                c1
-        );
+        for (Categorie categorie : categories) {
 
-        Article a2 = new Article(
-                4,
-                "SONY VAIO",
-                c1
-        );
+            System.out.println("Categorie : " + categorie.getLibelle());
 
-        Article a3 = new Article(
-                74,
-                "TERRA",
-                c2
-        );
+            for (Article article : articles) {
 
-        Article a4 = new Article(
-                785,
-                "HP Compaq",
-                c2
-        );
+                if (article.getCategorie() == categorie) {
+                    System.out.println(article);
+                }
+            }
 
-        // Tableau des articles
-        Article[] articles = {
-            a1, a2, a3, a4
-        };
-
-
-        // Affichage des articles par catégorie
-        for (int i = 0; i < categories.length; i++) {
-
-            Categorie categorie = categories[i];
-
-            System.out.println(
-                    categorie.getLibelle() + " :"
-            );
-
-            for (int j = 0; j < articles.length; j++) {
-
-                Article article = articles[j];
-
-               
+            System.out.println();
+        }
+    }
+}

@@ -1,9 +1,6 @@
-```java
-package com.example.tp;
+package tpjava;
 
-// =========================
-// Classe Etudiant
-// =========================
+
 class Etudiant {
 
     private static int compteur = 0;
@@ -12,19 +9,18 @@ class Etudiant {
     private String prenom;
     private Filiere filiere;
 
-    // Constructeur
+
     public Etudiant(String nom, String prenom) {
         this.id = ++compteur;
         this.nom = nom;
         this.prenom = prenom;
     }
 
-    // Associer l'étudiant à une filière
+
     public void setFiliere(Filiere f) {
         this.filiere = f;
     }
 
-    // Getters
     public int getId() {
         return id;
     }
@@ -41,23 +37,17 @@ class Etudiant {
         return filiere;
     }
 
-    // Affichage
-    @Override
     public String toString() {
         String fil = (filiere != null) ? filiere.getNom() : "Aucune";
 
-        return "Étudiant[id=" + id
+        return "Etudiant[id=" + id
                 + ", nom=" + nom
-                + ", prénom=" + prenom
-                + ", filière=" + fil
+                + ", prenom=" + prenom
+                + ", filiere=" + fil
                 + "]";
     }
 }
 
-
-// =========================
-// Classe Filiere
-// =========================
 class Filiere {
 
     private static int compteur = 0;
@@ -66,7 +56,6 @@ class Filiere {
     private Etudiant[] etudiants;
     private int nbEtudiants;
 
-    // Constructeur
     public Filiere(String nom) {
         this.id = ++compteur;
         this.nom = nom;
@@ -74,7 +63,6 @@ class Filiere {
         this.nbEtudiants = 0;
     }
 
-    // Getters
     public int getId() {
         return id;
     }
@@ -87,127 +75,99 @@ class Filiere {
         return nbEtudiants;
     }
 
-    // Ajouter un étudiant
     public void ajouterEtudiant(Etudiant e) {
 
-        // Agrandir le tableau s'il est plein
         if (nbEtudiants == etudiants.length) {
 
             Etudiant[] tmp = new Etudiant[etudiants.length * 2];
 
             System.arraycopy(
-                etudiants,
-                0,
-                tmp,
-                0,
-                etudiants.length
+                    etudiants,
+                    0,
+                    tmp,
+                    0,
+                    etudiants.length
             );
 
             etudiants = tmp;
         }
 
-        // Ajouter l'étudiant
         etudiants[nbEtudiants++] = e;
 
-        // Créer l'association dans l'autre sens
         e.setFiliere(this);
     }
 
-    // Afficher les étudiants
     public void afficherEtudiants() {
 
         System.out.println(
-            "Filière " + nom +
-            " (id=" + id + ") → " +
-            nbEtudiants + " étudiants :"
+                "Filiere " + nom
+                + " (id=" + id + ") -> "
+                + nbEtudiants + " etudiants :"
         );
 
         for (int i = 0; i < nbEtudiants; i++) {
 
             System.out.println(
-                "  • " +
-                etudiants[i].getNom() + " " +
-                etudiants[i].getPrenom() +
-                " (id=" +
-                etudiants[i].getId() +
-                ")"
+                    "  - "
+                    + etudiants[i].getNom() + " "
+                    + etudiants[i].getPrenom()
+                    + " (id="
+                    + etudiants[i].getId()
+                    + ")"
             );
         }
     }
 
-    // Affichage de la filière
-    @Override
     public String toString() {
 
-        return "Filiere[id=" + id +
-               ", nom=" + nom +
-               ", nbEtudiants=" + nbEtudiants +
-               "]";
+        return "Filiere[id=" + id
+                + ", nom=" + nom
+                + ", nbEtudiants=" + nbEtudiants
+                + "]";
     }
 }
 
 
-// =========================
-// Classe Main
-// =========================
 public class Main {
 
     public static void main(String[] args) {
 
-        // Création des filières
         Filiere info = new Filiere("Informatique");
-        Filiere genie = new Filiere("Génie Civil");
+        Filiere genie = new Filiere("Genie Civil");
 
-
-        // Création des étudiants
         Etudiant e1 = new Etudiant("El Idrissi", "Mohamed");
         Etudiant e2 = new Etudiant("Bentaleb", "Fatima");
         Etudiant e3 = new Etudiant("Chouaib", "Youssef");
         Etudiant e4 = new Etudiant("Lahlou", "Salma");
         Etudiant e5 = new Etudiant("Roussafi", "Hassan");
-        Etudiant e6 = new Etudiant("Amrani", "Aïcha");
+        Etudiant e6 = new Etudiant("Amrani", "Aicha");
 
-
-        // Association avec Informatique
         info.ajouterEtudiant(e1);
         info.ajouterEtudiant(e2);
         info.ajouterEtudiant(e3);
         info.ajouterEtudiant(e4);
         info.ajouterEtudiant(e5);
 
-        // 6ème étudiant :
-        // le tableau passe de 5 à 10
         info.ajouterEtudiant(e6);
 
-
-        // Association avec Génie Civil
         genie.ajouterEtudiant(
-            new Etudiant("Belkahia", "Khadija")
+                new Etudiant("Belkahia", "Khadija")
         );
 
         genie.ajouterEtudiant(
-            new Etudiant("Laaroussi", "Walid")
+                new Etudiant("Laaroussi", "Walid")
         );
 
-
-        // Affichage Informatique
         System.out.println(info);
         info.afficherEtudiants();
 
         System.out.println();
 
-
-        // Affichage Génie Civil
         System.out.println(genie);
         genie.afficherEtudiants();
 
         System.out.println();
 
-
-        // Détail d'un étudiant
-        System.out.println(
-            "Détail de e3 : " + e3
-        );
+        System.out.println("Detail de e3 : " + e3);
     }
 }
-```
